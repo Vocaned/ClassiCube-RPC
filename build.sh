@@ -1,1 +1,0 @@
-gcc Discord.c -o Discord.so -shared -fPIC -L. -l:discord_game_sdk.so -Wl,-rpath,'$ORIGIN/..'
