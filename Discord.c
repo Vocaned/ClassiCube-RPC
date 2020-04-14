@@ -40,6 +40,7 @@ static void DiscordPlugin_Tick(struct Entity* e, double delta) {
 }
 
 static void DiscordPlugin_SetPresence(void) {
+    if (!app.activities) return;
     if (start_time == NULL) start_time = time(0);
     if (!server_name.length) String_AppendString(&server_name, &Server.Name);
 
@@ -75,14 +76,15 @@ static void DiscordPlugin_Init(void) {
     memset(&activities_events, 0, sizeof(activities_events));
 
     struct DiscordCreateParams params;
+    DiscordCreateParamsSetDefault(&params);
     params.client_id = 378529523089670145;
-    params.flags = DiscordCreateFlags_Default;
+    params.flags = DiscordCreateFlags_NoRequireDiscord;
     params.activity_events = &activities_events;
     params.event_data = &app;
 
-    // TODO: Custom assert that doesnt kill the game completely
-    DiscordCreate(DISCORD_VERSION, &params, &app.core);
-
+    if (DiscordCreate(DISCORD_VERSION, &params, &app.core) != DiscordResult_Ok) return;
+    
+    
     app.activities = app.core->get_activity_manager(app.core);
 
     Event_RegisterVoid(&NetEvents.Disconnected, NULL, DiscordPlugin_Disconnected);
