@@ -1,4 +1,4 @@
-src
-out
-discord_game_sdk
+src/
+out/
+discord_game_sdk/
 *.exe

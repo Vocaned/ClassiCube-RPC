@@ -67,8 +67,6 @@ static void DiscordPlugin_Disconnected(void) {
 }
 
 static void DiscordPlugin_Init(void) {
-    start_time = time(0);
-
     // Setup Discord SDK
     memset(&app, 0, sizeof(app));
 
@@ -83,8 +81,7 @@ static void DiscordPlugin_Init(void) {
     params.event_data = &app;
 
     if (DiscordCreate(DISCORD_VERSION, &params, &app.core) != DiscordResult_Ok) return;
-    
-    
+
     app.activities = app.core->get_activity_manager(app.core);
 
     Event_RegisterVoid(&NetEvents.Disconnected, NULL, DiscordPlugin_Disconnected);
