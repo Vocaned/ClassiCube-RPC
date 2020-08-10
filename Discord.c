@@ -48,7 +48,7 @@ static void DiscordPlugin_SetPresence(void) {
     memset(&activity, 0, sizeof(activity));
 
     sprintf(activity.assets.large_image, "ccdefault");
-    sprintf(activity.assets.large_text, GAME_APP_NAME);
+    sprintf(activity.assets.large_text, Server.AppName.buffer);
     activity.timestamps.start = start_time;
 
     if (Server.IsSinglePlayer) {
